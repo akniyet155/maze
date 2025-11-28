@@ -9,17 +9,17 @@
         "path": "A1",
         "title": "Путь A — шаг 1",
         "children": [
-          { "emoji": "🌟", "action": "next", "node": {
+          { "emoji": "🔘", "action": "next", "node": {
             "path": "A2", "title": "Путь A — шаг 2", "children": [
-              { "emoji": "🌈", "action": "next", "node": {
+              { "emoji": "🔲", "action": "next", "node": {
                 "path": "A3", "title": "Путь A — шаг 3", "children": [
-                  { "emoji": "⚡", "action": "next", "node": {
+                  { "emoji": "🔳", "action": "next", "node": {
                     "path": "A4", "title": "Путь A — шаг 4", "children": [
-                      { "emoji": "🔥", "action": "next", "node": {
+                      { "emoji": "🔷", "action": "next", "node": {
                         "path": "A5", "title": "Путь A — шаг 5", "children": [
-                          { "emoji": "🌊", "action": "next", "node": {
+                          { "emoji": "🔶", "action": "next", "node": {
                             "path": "A6", "title": "Путь A — шаг 6", "children": [
-                              { "emoji": "🌌", "action": "next", "node": {
+                              { "emoji": "🔺", "action": "next", "node": {
                                 "path": "SECRET_LINK_1", "title": "Секрет: Чек", "type": "secret", "secret_id": "SECRET_LINK_1", "value": "http://t.me/send?start=CQlGNxxyelhh"
                               } },
                               { "emoji": "🧊", "action": "jump", "target_path": "A4" },
