@@ -12,16 +12,9 @@
       if (theme.hint_color) root.style.setProperty('--muted', theme.hint_color);
       if (theme.button_color) root.style.setProperty('--btn-bg', theme.button_color);
       if (theme.button_text_color) root.style.setProperty('--btn-fg', theme.button_text_color);
-
-      // Handle Telegram BackButton
-      if (tg.BackButton) {
-        tg.BackButton.onClick(() => goBack());
-        tgBackOn = true;
-      } else if (tg.onEvent) {
-        // fallback for older API
-        tg.onEvent('backButtonClicked', () => goBack());
-        tgBackOn = true;
-      }
+      // Отключаем системную кнопку Назад в Telegram Mini App
+      try { tg.BackButton?.hide?.(); } catch (_) {}
+      tgBackOn = false;
     } catch (_) { /* noop */ }
   }
 
@@ -35,10 +28,9 @@
   const elGrid = document.getElementById('grid');
   const elSecret = document.getElementById('secret');
   const btnHome = document.getElementById('home');
-  const btnBack = document.getElementById('back');
+  // no back button in UI by requirement
 
   btnHome.addEventListener('click', () => goHome());
-  btnBack.addEventListener('click', () => goBack());
 
   function syncTgBackButton() {
     if (!tg || !tgBackOn) return;
