@@ -72,6 +72,8 @@
   // no back button in UI by requirement
 
   btnHome.addEventListener('click', () => goHome());
+  // Присваиваем уникальный эмодзи кнопке "На главную"
+  try { btnHome.textContent = `${emojiAllocator.get('home')} На главную`; } catch(_) {}
 
   function syncTgBackButton() {
     if (!tg || !tgBackOn) return;
@@ -184,12 +186,13 @@
       const btn = document.createElement('button');
       btn.className = 'btn';
       if (i === 4) {
-        const key = 'dead:' + (node.path || ('depth:'+state.depth));
+        const key = 'dead:center:' + (node.path || ('depth:'+state.depth));
         btn.textContent = emojiAllocator.get(key);
         btn.title = node.button?.title || 'На главную';
         btn.addEventListener('click', () => goHome());
       } else {
-        btn.textContent = '·';
+        const key = 'dead:side:' + (node.path || ('depth:'+state.depth)) + ':' + i;
+        btn.textContent = emojiAllocator.get(key);
         btn.disabled = true;
         btn.style.opacity = '0.25';
       }
@@ -204,13 +207,16 @@
 
     // Render a mini grid of dimmed buttons (non-interactive) and focus secret
     const placeholders = new Array(9).fill(null);
+    let i = 0;
     placeholders.forEach(() => {
       const btn = document.createElement('button');
       btn.className = 'btn';
-      btn.textContent = '✨';
+      const key = 'secret:' + String(node.path || 'secret') + ':' + i;
+      btn.textContent = emojiAllocator.get(key);
       btn.disabled = true;
       btn.style.opacity = '0.25';
       elGrid.appendChild(btn);
+      i++;
     });
 
     // Secret content block
@@ -301,7 +307,8 @@
       const btn = document.createElement('button');
       btn.className = 'btn';
       if (child.disabled) {
-        btn.textContent = '·';
+        const key = 'node-disabled:' + String(node.path||'root') + ':' + idx;
+        btn.textContent = emojiAllocator.get(key) || '⬜';
         btn.disabled = true;
         btn.style.opacity = '0.25';
       } else {
