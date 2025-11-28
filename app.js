@@ -13,8 +13,34 @@
     '🔴','🟠','🟡','🟢','🔵','🟣','⚫','⚪','◼️','◻️','▪️','▫️','◾','◽','⬤','◯',
     '◆','◇','❖','✦','✧','✪','✫','✬','✭','✮','✯','✰','❂','❃',
     '✱','✲','✳️','✴️','❇️','✷','✸','✹','✺',
-    '⬟','⬢','⬣','🔶','🔷','🔸','🔹','🔺','🔻'
+    '⬟','⬢','⬣','🔶','🔷','🔸','🔹','🔺','🔻',
+    '◐','◑','◒','◓','◔','◕','◖','◗',
+    '▢','▣','▤','▥','▦','▧','▨','▩',
+    '▰','▱','▲','△','▴','▵','▶','▷','▸','▹','►','▻','▼','▽','▾','▿','◀','◁','◂','◃','◄','◅',
+    '◈','⬥','⬦','⬧','⬨','⬩'
   ];
+  // Глобальный распределитель уникальных эмодзи (стабильно по seed)
+  function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^h>>>16)>>>0;}}
+  function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;}}
+  const emojiAllocator = (() => {
+    const seed = xmur3('pool:'+SEED_PARAM)();
+    const rnd = mulberry32(seed);
+    const pool = NEUTRAL_POOL.slice();
+    for (let i=pool.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+    const used = new Set();
+    const map = new Map();
+    let idx = 0;
+    function next() {
+      if (idx >= pool.length) idx = 0;
+      let guard = 0;
+      while (used.has(pool[idx]) && guard < pool.length*2) { idx = (idx+1) % pool.length; guard++; }
+      const val = pool[idx];
+      used.add(val);
+      idx = (idx+1) % pool.length;
+      return val;
+    }
+    return { get(key){ if (map.has(key)) return map.get(key); const v = next(); map.set(key,v); return v; } };
+  })();
   if (tg) {
     try {
       tg.ready();
@@ -158,7 +184,8 @@
       const btn = document.createElement('button');
       btn.className = 'btn';
       if (i === 4) {
-        btn.textContent = node.button?.emoji || '🏠';
+        const key = 'dead:' + (node.path || ('depth:'+state.depth));
+        btn.textContent = emojiAllocator.get(key);
         btn.title = node.button?.title || 'На главную';
         btn.addEventListener('click', () => goHome());
       } else {
@@ -214,10 +241,12 @@
     clearGrid();
 
     const placeholders = new Array(9).fill(null);
+    let i = 0;
     placeholders.forEach(() => {
       const btn = document.createElement('button');
       btn.className = 'btn';
-      btn.textContent = '⬛';
+      const key = 'funnel:'+ state.depth + ':' + i;
+      btn.textContent = emojiAllocator.get(key);
       btn.addEventListener('click', () => {
         // ещё шаг в воронке
         if (node.remaining > 1) {
@@ -236,6 +265,7 @@
         }
       });
       elGrid.appendChild(btn);
+      i++;
     });
     syncTgBackButton();
   }
@@ -264,18 +294,6 @@
 
     // Ensure exactly 9 buttons (fill with disabled if fewer)
     const nine = ordered.slice(0, 9);
-
-    // Подмена эмодзи: генерируем 9 уникальных нейтральных эмодзи, стабильно для узла
-    function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^h>>>16)>>>0;}}
-    function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;}}
-    function genNeutralSet(seedStr){
-      const base = NEUTRAL_POOL.slice();
-      const seed = xmur3(seedStr||'emoji')();
-      const rnd = mulberry32(seed);
-      for (let i=base.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[base[i],base[j]]=[base[j],base[i]];}
-      return base.slice(0, 9);
-    }
-    const neutral = genNeutralSet('emoji:' + (node.path||'root') + ':' + SEED_PARAM);
     while (nine.length < 9) nine.push({ disabled: true });
 
     let idx = 0;
@@ -287,7 +305,8 @@
         btn.disabled = true;
         btn.style.opacity = '0.25';
       } else {
-        btn.textContent = neutral[idx % neutral.length] || '⬜';
+        const key = 'node:' + String(node.path||'root') + ':' + idx;
+        btn.textContent = emojiAllocator.get(key) || '⬜';
         btn.addEventListener('click', () => navigate(child));
       }
       elGrid.appendChild(btn);
