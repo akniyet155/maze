@@ -6,6 +6,15 @@
   const SEED_PARAM = params.get('seed') || '';
   const ENFORCE_FINAL_DEPTH = true; // все неверные пути заканчиваются на финальной глубине
   const MAX_STEPS_TO_SECRET = 6;    // столько шагов от корня до финала (секрет/тупик)
+
+  // Набор нейтральных эмодзи для маскировки (без смысловых подсказок)
+  const NEUTRAL_POOL = [
+    '🟥','🟧','🟨','🟩','🟦','🟪','⬛','⬜','🟫',
+    '🔴','🟠','🟡','🟢','🔵','🟣','⚫','⚪','◼️','◻️','▪️','▫️','◾','◽','⬤','◯',
+    '◆','◇','❖','✦','✧','✪','✫','✬','✭','✮','✯','✰','❂','❃',
+    '✱','✲','✳️','✴️','❇️','✷','✸','✹','✺',
+    '⬟','⬢','⬣','🔶','🔷','🔸','🔹','🔺','🔻'
+  ];
   if (tg) {
     try {
       tg.ready();
@@ -255,8 +264,21 @@
 
     // Ensure exactly 9 buttons (fill with disabled if fewer)
     const nine = ordered.slice(0, 9);
+
+    // Подмена эмодзи: генерируем 9 уникальных нейтральных эмодзи, стабильно для узла
+    function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^h>>>16)>>>0;}}
+    function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;}}
+    function genNeutralSet(seedStr){
+      const base = NEUTRAL_POOL.slice();
+      const seed = xmur3(seedStr||'emoji')();
+      const rnd = mulberry32(seed);
+      for (let i=base.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[base[i],base[j]]=[base[j],base[i]];}
+      return base.slice(0, 9);
+    }
+    const neutral = genNeutralSet('emoji:' + (node.path||'root') + ':' + SEED_PARAM);
     while (nine.length < 9) nine.push({ disabled: true });
 
+    let idx = 0;
     for (const child of nine) {
       const btn = document.createElement('button');
       btn.className = 'btn';
@@ -265,10 +287,11 @@
         btn.disabled = true;
         btn.style.opacity = '0.25';
       } else {
-        btn.textContent = child.emoji || '⬜';
+        btn.textContent = neutral[idx % neutral.length] || '⬜';
         btn.addEventListener('click', () => navigate(child));
       }
       elGrid.appendChild(btn);
+      idx++;
     }
     syncTgBackButton();
   }
