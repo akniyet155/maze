@@ -3,7 +3,7 @@
   "title": "лабиринт OYX. найди чек",
   "children": [
     {
-      "emoji": "🚀",
+      "emoji": "🟢",
       "action": "next",
       "node": {
         "path": "A1",
@@ -80,23 +80,23 @@
       }
     },
     {
-      "emoji": "🔑",
+      "emoji": "🟠",
       "action": "next",
       "node": {
         "path": "B1",
         "title": "Путь B — шаг 1",
         "children": [
-          { "emoji": "🗝️", "action": "next", "node": {
+          { "emoji": "🟣", "action": "next", "node": {
             "path": "B2", "title": "Путь B — шаг 2", "children": [
-              { "emoji": "💎", "action": "next", "node": {
+              { "emoji": "🟦", "action": "next", "node": {
                 "path": "B3", "title": "Путь B — шаг 3", "children": [
-                  { "emoji": "🔒", "action": "next", "node": {
+                  { "emoji": "🟩", "action": "next", "node": {
                     "path": "B4", "title": "Путь B — шаг 4", "children": [
-                      { "emoji": "🔓", "action": "next", "node": {
+                      { "emoji": "🟥", "action": "next", "node": {
                         "path": "B5", "title": "Путь B — шаг 5", "children": [
-                          { "emoji": "🗄️", "action": "next", "node": {
+                          { "emoji": "🟨", "action": "next", "node": {
                             "path": "B6", "title": "Путь B — шаг 6", "children": [
-                              { "emoji": "🔐", "action": "next", "node": {
+                              { "emoji": "🟫", "action": "next", "node": {
                                 "path": "SECRET_PASS_1", "title": "Секрет: Пароль", "type": "secret", "secret_id": "SECRET_PASS_1", "value": "kndhbn65fg"
                               } },
                               { "emoji": "🧭", "action": "jump", "target_path": "B4" },
