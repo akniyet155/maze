@@ -1,5 +1,6 @@
 (function () {
   const tg = window.Telegram?.WebApp;
+  let tgBackOn = false;
   if (tg) {
     try {
       tg.ready();
@@ -11,6 +12,16 @@
       if (theme.hint_color) root.style.setProperty('--muted', theme.hint_color);
       if (theme.button_color) root.style.setProperty('--btn-bg', theme.button_color);
       if (theme.button_text_color) root.style.setProperty('--btn-fg', theme.button_text_color);
+
+      // Handle Telegram BackButton
+      if (tg.BackButton) {
+        tg.BackButton.onClick(() => goBack());
+        tgBackOn = true;
+      } else if (tg.onEvent) {
+        // fallback for older API
+        tg.onEvent('backButtonClicked', () => goBack());
+        tgBackOn = true;
+      }
     } catch (_) { /* noop */ }
   }
 
@@ -29,10 +40,19 @@
   btnHome.addEventListener('click', () => goHome());
   btnBack.addEventListener('click', () => goBack());
 
+  function syncTgBackButton() {
+    if (!tg || !tgBackOn) return;
+    try {
+      if (state.stack.length > 0) tg.BackButton?.show?.();
+      else tg.BackButton?.hide?.();
+    } catch (_) { /* noop */ }
+  }
+
   function goHome() {
     state.stack = [];
     state.current = state.root;
     renderNode();
+    syncTgBackButton();
   }
 
   function goBack() {
@@ -40,6 +60,7 @@
       state.current = state.stack.pop();
       renderNode();
     }
+    syncTgBackButton();
   }
 
   function findByPath(node, path) {
@@ -114,6 +135,7 @@
       }
       elGrid.appendChild(btn);
     });
+    syncTgBackButton();
   }
 
   function renderSecret(node) {
@@ -151,6 +173,7 @@
       span.textContent = node.value || '';
       elSecret.appendChild(span);
     }
+    syncTgBackButton();
   }
 
   function renderNode() {
@@ -181,6 +204,7 @@
       }
       elGrid.appendChild(btn);
     }
+    syncTgBackButton();
   }
 
   async function bootstrap() {
