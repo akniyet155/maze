@@ -179,8 +179,15 @@
     clearGrid();
 
     const children = node.children || [];
+
+    // Stable shuffle by node.path so расположение кнопок не подсказывает путь
+    function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^h>>>16)>>>0;}}
+    function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;}}
+    function shuffleStable(arr, seedStr){const out=arr.slice();const seed=xmur3(seedStr||'seed')();const rnd=mulberry32(seed);for(let i=out.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[out[i],out[j]]=[out[j],out[i]];}return out;}
+
+    const mixed = shuffleStable(children, String(node.path||'root'));
     // Ensure exactly 9 buttons (fill with disabled if fewer)
-    const nine = children.slice(0, 9);
+    const nine = mixed.slice(0, 9);
     while (nine.length < 9) nine.push({ disabled: true });
 
     for (const child of nine) {
