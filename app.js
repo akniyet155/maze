@@ -32,6 +32,12 @@
     // фигуры-стрелки
     '⬅️','➡️','⬆️','⬇️','↖️','↗️','↙️','↘️','↩️','↪️','🔁','🔃'
   ];
+  // Сверхбезопасный набор для воронки/тупиков/заглушек (максимальная поддержка)
+  const SAFE_POOL = [
+    '🟥','🟧','🟨','🟩','🟦','🟪','⬛','⬜',
+    '🔴','🟠','🟡','🟢','🔵','🟣','⚫','⚪',
+    '⭐','✨','❤️','💙','💚','💛','💜','🤍','🤎'
+  ];
   // Глобальный распределитель уникальных эмодзи (стабильно по seed)
   function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^h>>>16)>>>0;}}
   function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;}}
@@ -55,9 +61,17 @@
     return { get(key){ if (map.has(key)) return map.get(key); const v = next(); map.set(key,v); return v; } };
   })();
   // Безопасная установка эмодзи на кнопку
-  function setBtnEmoji(btn, key) {
+  function setBtnEmoji(btn, key, opts) {
+    const useSafe = opts?.safe === true;
     try {
-      let v = emojiAllocator.get(key);
+      let v;
+      if (useSafe) {
+        // детерминированный выбор из SAFE_POOL по ключу
+        const hv = xmur3('safe:'+key)();
+        v = SAFE_POOL[hv % SAFE_POOL.length];
+      } else {
+        v = emojiAllocator.get(key);
+      }
       if (!v || (typeof v === 'string' && v.trim().length === 0)) v = '⬜';
       btn.textContent = v;
     } catch (_) {
@@ -210,12 +224,12 @@
       btn.className = 'btn';
       if (i === 4) {
         const key = 'dead:center:' + (node.path || ('depth:'+state.depth));
-        setBtnEmoji(btn, key);
+        setBtnEmoji(btn, key, { safe: true });
         btn.title = node.button?.title || 'На главную';
         btn.addEventListener('click', () => goHome());
       } else {
         const key = 'dead:side:' + (node.path || ('depth:'+state.depth)) + ':' + i;
-        setBtnEmoji(btn, key);
+        setBtnEmoji(btn, key, { safe: true });
         btn.disabled = true;
         btn.style.opacity = '0.25';
       }
@@ -275,7 +289,7 @@
       const btn = document.createElement('button');
       btn.className = 'btn';
       const key = 'funnel:'+ state.depth + ':' + i;
-      setBtnEmoji(btn, key);
+      setBtnEmoji(btn, key, { safe: true });
       btn.addEventListener('click', () => {
         // ещё шаг в воронке
         if (node.remaining > 1) {
@@ -331,7 +345,7 @@
       btn.className = 'btn';
       if (child.disabled) {
         const key = 'node-disabled:' + String(node.path||'root') + ':' + idx;
-        setBtnEmoji(btn, key);
+        setBtnEmoji(btn, key, { safe: true });
         btn.disabled = true;
         btn.style.opacity = '0.25';
       } else {
