@@ -8,16 +8,29 @@
   const MAX_STEPS_TO_SECRET = 6;    // столько шагов от корня до финала (секрет/тупик)
 
   // Набор нейтральных эмодзи для маскировки (без смысловых подсказок)
+  // Подборка общеизвестных и хорошо поддерживаемых эмодзи (визуально заметных)
   const NEUTRAL_POOL = [
-    '🟥','🟧','🟨','🟩','🟦','🟪','⬛','⬜','🟫',
-    '🔴','🟠','🟡','🟢','🔵','🟣','⚫','⚪','◼️','◻️','▪️','▫️','◾','◽','⬤','◯',
-    '◆','◇','❖','✦','✧','✪','✫','✬','✭','✮','✯','✰','❂','❃',
-    '✱','✲','✳️','✴️','❇️','✷','✸','✹','✺',
-    '⬟','⬢','⬣','🔶','🔷','🔸','🔹','🔺','🔻',
-    '◐','◑','◒','◓','◔','◕','◖','◗',
-    '▢','▣','▤','▥','▦','▧','▨','▩',
-    '▰','▱','▲','△','▴','▵','▶','▷','▸','▹','►','▻','▼','▽','▾','▿','◀','◁','◂','◃','◄','◅',
-    '◈','⬥','⬦','⬧','⬨','⬩'
+    // геометрия и цвета
+    '🟥','🟧','🟨','🟩','🟦','🟪','🟫','⬛','⬜',
+    '🔴','🟠','🟡','🟢','🔵','🟣','⚫','⚪','🔷','🔶','🔸','🔹','🔺','🔻','⬤','◯','◼️','◻️','▪️','▫️','◾','◽','✳️','✴️','❇️','✴️','✳️','❇️','⭐','🌟','✨','❇️',
+    // базовые символы
+    '❗','❕','❓','❔','❎','✅','✖️','➕','➖','➗','♻️','⚙️','⚡','☄️','🔥','❄️','💧','🌊','🌬️','🌈',
+    // сердца
+    '❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','❣️','💖','💗','💓','💞','💘',
+    // звуки и знаки
+    '🔔','🔕','🔈','🔉','🔊','🔇','📣','📢','📯','🔔',
+    // лица (нейтральные)
+    '🙂','😀','😃','😄','😁','😆','😊','😉','😌','😺','😸','😹',
+    // еда/растения (нейтрально)
+    '🍎','🍊','🍋','🍉','🍇','🍓','🍒','🍍','🥝','🍑','🍐','🥑','🥕','🌶️','🌽','🥦','🍄','🍪','🍩','🍰','🍭','🍬',
+    // предметы (нейтрально)
+    '🎈','🎉','🎊','🎯','🎲','🧸','🧩','🪀','🪁','🔮','🪄','🧷','📎','🧱','🧲','🧪','🧭','🧯','🪙','🛞',
+    // погода/природа
+    '☀️','🌤️','⛅','🌥️','☁️','🌦️','🌧️','⛈️','🌩️','🌨️','🌪️','🌫️','🌙','⭐','🌟',
+    // транспорт/навигация
+    '🧭','🛰️','🚦','🚧','⚓','⛵','🚀','🛸','🛟','🧭',
+    // фигуры-стрелки
+    '⬅️','➡️','⬆️','⬇️','↖️','↗️','↙️','↘️','↩️','↪️','🔁','🔃'
   ];
   // Глобальный распределитель уникальных эмодзи (стабильно по seed)
   function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^h>>>16)>>>0;}}
@@ -41,6 +54,16 @@
     }
     return { get(key){ if (map.has(key)) return map.get(key); const v = next(); map.set(key,v); return v; } };
   })();
+  // Безопасная установка эмодзи на кнопку
+  function setBtnEmoji(btn, key) {
+    try {
+      let v = emojiAllocator.get(key);
+      if (!v || (typeof v === 'string' && v.trim().length === 0)) v = '⬜';
+      btn.textContent = v;
+    } catch (_) {
+      btn.textContent = '⬜';
+    }
+  }
   if (tg) {
     try {
       tg.ready();
@@ -187,12 +210,12 @@
       btn.className = 'btn';
       if (i === 4) {
         const key = 'dead:center:' + (node.path || ('depth:'+state.depth));
-        btn.textContent = emojiAllocator.get(key);
+        setBtnEmoji(btn, key);
         btn.title = node.button?.title || 'На главную';
         btn.addEventListener('click', () => goHome());
       } else {
         const key = 'dead:side:' + (node.path || ('depth:'+state.depth)) + ':' + i;
-        btn.textContent = emojiAllocator.get(key);
+        setBtnEmoji(btn, key);
         btn.disabled = true;
         btn.style.opacity = '0.25';
       }
@@ -212,7 +235,7 @@
       const btn = document.createElement('button');
       btn.className = 'btn';
       const key = 'secret:' + String(node.path || 'secret') + ':' + i;
-      btn.textContent = emojiAllocator.get(key);
+      setBtnEmoji(btn, key);
       btn.disabled = true;
       btn.style.opacity = '0.25';
       elGrid.appendChild(btn);
@@ -252,7 +275,7 @@
       const btn = document.createElement('button');
       btn.className = 'btn';
       const key = 'funnel:'+ state.depth + ':' + i;
-      btn.textContent = emojiAllocator.get(key);
+      setBtnEmoji(btn, key);
       btn.addEventListener('click', () => {
         // ещё шаг в воронке
         if (node.remaining > 1) {
@@ -308,12 +331,12 @@
       btn.className = 'btn';
       if (child.disabled) {
         const key = 'node-disabled:' + String(node.path||'root') + ':' + idx;
-        btn.textContent = emojiAllocator.get(key) || '⬜';
+        setBtnEmoji(btn, key);
         btn.disabled = true;
         btn.style.opacity = '0.25';
       } else {
         const key = 'node:' + String(node.path||'root') + ':' + idx;
-        btn.textContent = emojiAllocator.get(key) || '⬜';
+        setBtnEmoji(btn, key);
         btn.addEventListener('click', () => navigate(child));
       }
       elGrid.appendChild(btn);
