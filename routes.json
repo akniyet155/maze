@@ -1,0 +1,167 @@
+{
+  "path": "root",
+  "title": "лабиринт OYX. найди чек",
+  "children": [
+    {
+      "emoji": "🟢",
+      "action": "next",
+      "node": {
+        "path": "A1",
+        "title": "Путь A — шаг 1",
+        "children": [
+          { "emoji": "🔘", "action": "next", "node": {
+            "path": "A2", "title": "Путь A — шаг 2", "children": [
+              { "emoji": "🔲", "action": "next", "node": {
+                "path": "A3", "title": "Путь A — шаг 3", "children": [
+                  { "emoji": "🔳", "action": "next", "node": {
+                    "path": "A4", "title": "Путь A — шаг 4", "children": [
+                      { "emoji": "🔷", "action": "next", "node": {
+                        "path": "A5", "title": "Путь A — шаг 5", "children": [
+                          { "emoji": "🔶", "action": "next", "node": {
+                            "path": "A6", "title": "Путь A — шаг 6", "children": [
+                              { "emoji": "🔺", "action": "next", "node": {
+                                "path": "SECRET_LINK_1", "title": "Секрет: Чек", "type": "secret", "secret_id": "SECRET_LINK_1", "value": "http://t.me/send?start=CQlGNxxyelhh"
+                              } },
+                              { "emoji": "🧊", "action": "jump", "target_path": "A4" },
+                              { "emoji": "🗿", "action": "jump", "target_path": "A3" },
+                              { "emoji": "🪨", "action": "next", "node": { "path": "DE_A6_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏁", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "🧯", "action": "next", "node": { "path": "DE_A6_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏡", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "🪣", "action": "next", "node": { "path": "DE_A6_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏙️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "🧱", "action": "next", "node": { "path": "DE_A6_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🧭", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "🧼", "action": "next", "node": { "path": "DE_A6_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏚️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "🪵", "action": "next", "node": { "path": "DE_A6_6", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🛖", "title": "На главную", "action": "jump", "target_path": "root" } } }
+                            ]
+                          } },
+                          { "emoji": "🧪", "action": "jump", "target_path": "A3" },
+                          { "emoji": "🧰", "action": "jump", "target_path": "A2" },
+                          { "emoji": "🪙", "action": "next", "node": { "path": "DE_A5_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🛕", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                          { "emoji": "🪜", "action": "next", "node": { "path": "DE_A5_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏗️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                          { "emoji": "🧲", "action": "next", "node": { "path": "DE_A5_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏞️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                          { "emoji": "🪆", "action": "next", "node": { "path": "DE_A5_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🧭‍📍", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                          { "emoji": "🧺", "action": "next", "node": { "path": "DE_A5_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏜️", "title": "На главную", "action": "jump", "target_path": "root" } } }
+                        ]
+                      } },
+                      { "emoji": "🔁", "action": "jump", "target_path": "A2" },
+                      { "emoji": "🪣", "action": "next", "node": { "path": "DE_A4_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏰", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                      { "emoji": "🧹", "action": "next", "node": { "path": "DE_A4_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏯", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                      { "emoji": "🧲", "action": "next", "node": { "path": "DE_A4_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏟️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                      { "emoji": "🪆", "action": "next", "node": { "path": "DE_A4_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏛️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                      { "emoji": "🧺", "action": "next", "node": { "path": "DE_A4_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏚️‍♂️", "title": "На главную", "action": "jump", "target_path": "root" } } }
+                    ]
+                  } },
+                  { "emoji": "🔙", "action": "jump", "target_path": "A2" },
+                  { "emoji": "🪨", "action": "next", "node": { "path": "DE_A3_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏝️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "🪵", "action": "next", "node": { "path": "DE_A3_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏔️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "🧯", "action": "next", "node": { "path": "DE_A3_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏖️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "↩️", "action": "jump", "target_path": "A1" },
+                  { "emoji": "🧦", "action": "next", "node": { "path": "DE_A3_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏕️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "🧥", "action": "next", "node": { "path": "DE_A3_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏘️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "🧢", "action": "next", "node": { "path": "DE_A3_6", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏙️‍🌆", "title": "На главную", "action": "jump", "target_path": "root" } } }
+                ]
+              } },
+              { "emoji": "🔁", "action": "jump", "target_path": "A1" },
+              { "emoji": "🪞", "action": "next", "node": { "path": "DE_A2_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏡‍↩️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+              { "emoji": "🪅", "action": "next", "node": { "path": "DE_A2_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏘️‍↩️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+              { "emoji": "🧨", "action": "next", "node": { "path": "DE_A2_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏚️‍↩️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+              { "emoji": "🪃", "action": "next", "node": { "path": "DE_A2_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏠‍↩️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+              { "emoji": "↩️", "action": "jump", "target_path": "A1" },
+              { "emoji": "🧵", "action": "next", "node": { "path": "DE_A2_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏗️‍↩️", "title": "На главную", "action": "jump", "target_path": "root" } } }
+            ]
+          }},
+          { "emoji": "⚓", "action": "jump", "target_path": "root" },
+          { "emoji": "🎲", "action": "next", "node": { "path": "DE_A1_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "📦", "action": "next", "node": { "path": "DE_A1_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏘️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🛰️", "action": "next", "node": { "path": "DE_A1_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏙️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🪐", "action": "next", "node": { "path": "DE_A1_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏝️‍↩️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🪁", "action": "next", "node": { "path": "DE_A1_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏖️‍↩️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🧸", "action": "next", "node": { "path": "DE_A1_6", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏜️‍↩️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🧬", "action": "next", "node": { "path": "DE_A1_7", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏛️‍↩️", "title": "На главную", "action": "jump", "target_path": "root" } } }
+        ]
+      }
+    },
+    {
+      "emoji": "🟠",
+      "action": "next",
+      "node": {
+        "path": "B1",
+        "title": "Путь B — шаг 1",
+        "children": [
+          { "emoji": "🟣", "action": "next", "node": {
+            "path": "B2", "title": "Путь B — шаг 2", "children": [
+              { "emoji": "🟦", "action": "next", "node": {
+                "path": "B3", "title": "Путь B — шаг 3", "children": [
+                  { "emoji": "🟩", "action": "next", "node": {
+                    "path": "B4", "title": "Путь B — шаг 4", "children": [
+                      { "emoji": "🟥", "action": "next", "node": {
+                        "path": "B5", "title": "Путь B — шаг 5", "children": [
+                          { "emoji": "🟨", "action": "next", "node": {
+                            "path": "B6", "title": "Путь B — шаг 6", "children": [
+                              { "emoji": "🟫", "action": "next", "node": {
+                                "path": "SECRET_PASS_1", "title": "Секрет: Пароль", "type": "secret", "secret_id": "SECRET_PASS_1", "value": "kndhbn65fg"
+                              } },
+                              { "emoji": "🧭", "action": "jump", "target_path": "B4" },
+                              { "emoji": "🧩", "action": "jump", "target_path": "B3" },
+                              { "emoji": "🧲", "action": "next", "node": { "path": "DE_B6_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏘️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "🧪", "action": "next", "node": { "path": "DE_B6_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏙️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "🛞", "action": "next", "node": { "path": "DE_B6_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏝️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "🧱", "action": "next", "node": { "path": "DE_B6_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏖️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "📎", "action": "next", "node": { "path": "DE_B6_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏜️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                              { "emoji": "🧧", "action": "next", "node": { "path": "DE_B6_6", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏛️", "title": "На главную", "action": "jump", "target_path": "root" } } }
+                            ]
+                          } },
+                          { "emoji": "↩️", "action": "jump", "target_path": "B4" },
+                          { "emoji": "🧿", "action": "next", "node": { "path": "DE_B5_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏚️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                          { "emoji": "🪄", "action": "next", "node": { "path": "DE_B5_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏘️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                          { "emoji": "🧷", "action": "next", "node": { "path": "DE_B5_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏙️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                          { "emoji": "🪙", "action": "next", "node": { "path": "DE_B5_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏝️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                          { "emoji": "🧲", "action": "next", "node": { "path": "DE_B5_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏖️", "title": "На главную", "action": "jump", "target_path": "root" } } }
+                        ]
+                      } },
+                      { "emoji": "🔙", "action": "jump", "target_path": "B3" },
+                      { "emoji": "🧪", "action": "next", "node": { "path": "DE_B4_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏜️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                      { "emoji": "🧰", "action": "next", "node": { "path": "DE_B4_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏛️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                      { "emoji": "🛞", "action": "next", "node": { "path": "DE_B4_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏯", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                      { "emoji": "↩️", "action": "jump", "target_path": "B2" },
+                      { "emoji": "🧱", "action": "next", "node": { "path": "DE_B4_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏟️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                      { "emoji": "📎", "action": "next", "node": { "path": "DE_B4_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏰", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                      { "emoji": "🧭", "action": "next", "node": { "path": "DE_B4_6", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏕️", "title": "На главную", "action": "jump", "target_path": "root" } } }
+                    ]
+                  } },
+                  { "emoji": "↩️", "action": "jump", "target_path": "B2" },
+                  { "emoji": "🧧", "action": "next", "node": { "path": "DE_B3_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏚️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "🧿", "action": "next", "node": { "path": "DE_B3_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏘️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "🪄", "action": "next", "node": { "path": "DE_B3_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏙️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "🧷", "action": "next", "node": { "path": "DE_B3_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏝️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "🪙", "action": "next", "node": { "path": "DE_B3_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏖️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+                  { "emoji": "🧲", "action": "next", "node": { "path": "DE_B3_6", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏜️", "title": "На главную", "action": "jump", "target_path": "root" } } }
+                ]
+              } },
+              { "emoji": "🔙", "action": "jump", "target_path": "B1" },
+              { "emoji": "🧭", "action": "next", "node": { "path": "DE_B2_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } },
+              { "emoji": "🧲", "action": "next", "node": { "path": "DE_B2_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏘️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+              { "emoji": "🧪", "action": "next", "node": { "path": "DE_B2_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏙️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+              { "emoji": "🧰", "action": "next", "node": { "path": "DE_B2_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏝️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+              { "emoji": "🛞", "action": "next", "node": { "path": "DE_B2_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏖️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+              { "emoji": "🧱", "action": "next", "node": { "path": "DE_B2_6", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏛️", "title": "На главную", "action": "jump", "target_path": "root" } } }
+            ]
+          }},
+          { "emoji": "🧪", "action": "next", "node": { "path": "DE_B1_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🧯", "action": "next", "node": { "path": "DE_B1_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏘️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🧲", "action": "next", "node": { "path": "DE_B1_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏙️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🪙", "action": "next", "node": { "path": "DE_B1_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏝️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🛞", "action": "next", "node": { "path": "DE_B1_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏖️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "⚙️", "action": "next", "node": { "path": "DE_B1_6", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏜️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "🧱", "action": "next", "node": { "path": "DE_B1_7", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏛️", "title": "На главную", "action": "jump", "target_path": "root" } } },
+          { "emoji": "📎", "action": "next", "node": { "path": "DE_B1_8", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏯", "title": "На главную", "action": "jump", "target_path": "root" } } }
+        ]
+      }
+    },
+    { "emoji": "🧭", "action": "next", "node": { "path": "DE_ROOT_1", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } },
+    { "emoji": "🎯", "action": "next", "node": { "path": "DE_ROOT_2", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } },
+    { "emoji": "🧩", "action": "next", "node": { "path": "DE_ROOT_3", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } },
+    { "emoji": "🗺️", "action": "next", "node": { "path": "DE_ROOT_4", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } },
+    { "emoji": "🛡️", "action": "next", "node": { "path": "DE_ROOT_5", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } },
+    { "emoji": "🕹️", "action": "next", "node": { "path": "DE_ROOT_6", "title": "Dead End", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } },
+    { "emoji": "🧠", "action": "next", "node": { "path": "DE_ROOT_7", "title": "Тупик", "type": "dead_end", "button": { "emoji": "🏠", "title": "На главную", "action": "jump", "target_path": "root" } } }
+  ]
+}
