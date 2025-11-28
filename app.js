@@ -1,6 +1,11 @@
 (function () {
   const tg = window.Telegram?.WebApp;
   let tgBackOn = false;
+  const params = new URLSearchParams(location.search);
+  const ALLOW_MIX = params.has('mix');
+  const SEED_PARAM = params.get('seed') || '';
+  const ENFORCE_FINAL_DEPTH = true; // все неверные пути заканчиваются на финальной глубине
+  const MAX_STEPS_TO_SECRET = 6;    // столько шагов от корня до финала (секрет/тупик)
   if (tg) {
     try {
       tg.ready();
@@ -22,6 +27,7 @@
     root: null,
     current: null,
     stack: [],
+    depth: 0, // кол-во сделанных шагов от корня (next/funnel)
   };
 
   const elTitle = document.getElementById('node-title');
@@ -43,6 +49,7 @@
   function goHome() {
     state.stack = [];
     state.current = state.root;
+    state.depth = 0;
     renderNode();
     syncTgBackButton();
   }
@@ -71,35 +78,56 @@
   function navigate(child) {
     const { action } = child;
     if (action === 'jump') {
-      const dest = child.target_path === 'root' ? state.root : findByPath(state.root, child.target_path);
-      if (dest) {
-        state.stack.push(state.current);
-        state.current = dest;
-        renderNode();
+      if (ENFORCE_FINAL_DEPTH) {
+        startFunnel();
+      } else {
+        const dest = child.target_path === 'root' ? state.root : findByPath(state.root, child.target_path);
+        if (dest) {
+          state.stack.push(state.current);
+          state.current = dest;
+          state.depth += 1;
+          renderNode();
+        }
       }
       return;
     }
     if (action === 'next') {
       if (child.node?.type === 'dead_end') {
-        // show single button to go home
-        state.stack.push(state.current);
-        state.current = child.node;
-        renderDeadEnd(child.node);
+        if (ENFORCE_FINAL_DEPTH) {
+          startFunnel();
+        } else {
+          state.stack.push(state.current);
+          state.current = child.node;
+          state.depth += 1;
+          renderDeadEnd(child.node);
+        }
         return;
       }
       if (child.node?.type === 'secret') {
         state.stack.push(state.current);
         state.current = child.node;
+        state.depth += 1;
         renderSecret(child.node);
         return;
       }
       if (child.node) {
         state.stack.push(state.current);
         state.current = child.node;
+        state.depth += 1;
         renderNode();
       }
       return;
     }
+  }
+
+  function startFunnel() {
+    // Сколько шагов ещё нужно пройти до финала
+    const remaining = Math.max(0, MAX_STEPS_TO_SECRET - (state.depth + 1));
+    const node = { type: 'funnel', title: '…', remaining };
+    state.stack.push(state.current);
+    state.current = node;
+    state.depth += 1;
+    renderFunnel(node);
   }
 
   function clearGrid() {
@@ -168,6 +196,37 @@
     syncTgBackButton();
   }
 
+  function renderFunnel(node) {
+    elTitle.textContent = node.title || '…';
+    clearGrid();
+
+    const placeholders = new Array(9).fill(null);
+    placeholders.forEach(() => {
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.textContent = '⬛';
+      btn.addEventListener('click', () => {
+        // ещё шаг в воронке
+        if (node.remaining > 0) {
+          const next = { type: 'funnel', title: node.title || '…', remaining: node.remaining - 1 };
+          state.stack.push(state.current);
+          state.current = next;
+          state.depth += 1;
+          renderFunnel(next);
+        } else {
+          // финал воронки — тупик на той же глубине, что и секрет
+          const de = { type: 'dead_end', title: 'Тупик', button: { emoji: '🏠', title: 'На главную', action: 'jump', target_path: 'root' } };
+          state.stack.push(state.current);
+          state.current = de;
+          state.depth += 1;
+          renderDeadEnd(de);
+        }
+      });
+      elGrid.appendChild(btn);
+    });
+    syncTgBackButton();
+  }
+
   function renderNode() {
     const node = state.current;
     if (!node) return;
@@ -180,14 +239,18 @@
 
     const children = node.children || [];
 
-    // Stable shuffle by node.path so расположение кнопок не подсказывает путь
-    function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^h>>>16)>>>0;}}
-    function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;}}
-    function shuffleStable(arr, seedStr){const out=arr.slice();const seed=xmur3(seedStr||'seed')();const rnd=mulberry32(seed);for(let i=out.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[out[i],out[j]]=[out[j],out[i]];}return out;}
+    // Перемешивание кнопок — ТОЛЬКО по вашей команде: ?mix[&seed=...]
+    let ordered = children.slice();
+    if (ALLOW_MIX) {
+      function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^h>>>16)>>>0;}}
+      function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;}}
+      function shuffleStable(arr, seedStr){const out=arr.slice();const seed=xmur3(seedStr||'seed')();const rnd=mulberry32(seed);for(let i=out.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[out[i],out[j]]=[out[j],out[i]];}return out;}
+      const mixSeed = SEED_PARAM || String(node.path||'root');
+      ordered = shuffleStable(children, mixSeed);
+    }
 
-    const mixed = shuffleStable(children, String(node.path||'root'));
     // Ensure exactly 9 buttons (fill with disabled if fewer)
-    const nine = mixed.slice(0, 9);
+    const nine = ordered.slice(0, 9);
     while (nine.length < 9) nine.push({ disabled: true });
 
     for (const child of nine) {
