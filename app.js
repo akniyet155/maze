@@ -78,16 +78,13 @@
   function navigate(child) {
     const { action } = child;
     if (action === 'jump') {
-      if (ENFORCE_FINAL_DEPTH) {
-        startFunnel();
-      } else {
-        const dest = child.target_path === 'root' ? state.root : findByPath(state.root, child.target_path);
-        if (dest) {
-          state.stack.push(state.current);
-          state.current = dest;
-          state.depth += 1;
-          renderNode();
-        }
+      // Прыжки сохраняем как есть (не превращаем в воронку)
+      const dest = child.target_path === 'root' ? state.root : findByPath(state.root, child.target_path);
+      if (dest) {
+        state.stack.push(state.current);
+        state.current = dest;
+        state.depth += 1;
+        renderNode();
       }
       return;
     }
@@ -121,12 +118,19 @@
   }
 
   function startFunnel() {
-    // Сколько шагов ещё нужно пройти до финала
+    // Учтём текущий переход как 1 шаг
     const remaining = Math.max(0, MAX_STEPS_TO_SECRET - (state.depth + 1));
-    const node = { type: 'funnel', title: '…', remaining };
     state.stack.push(state.current);
-    state.current = node;
     state.depth += 1;
+    if (remaining <= 0) {
+      // Уже достигли финальной глубины — показываем тупик сразу
+      const de = { type: 'dead_end', title: 'Тупик', button: { emoji: '🏠', title: 'На главную', action: 'jump', target_path: 'root' } };
+      state.current = de;
+      renderDeadEnd(de);
+      return;
+    }
+    const node = { type: 'funnel', title: '…', remaining };
+    state.current = node;
     renderFunnel(node);
   }
 
@@ -207,14 +211,14 @@
       btn.textContent = '⬛';
       btn.addEventListener('click', () => {
         // ещё шаг в воронке
-        if (node.remaining > 0) {
+        if (node.remaining > 1) {
           const next = { type: 'funnel', title: node.title || '…', remaining: node.remaining - 1 };
           state.stack.push(state.current);
           state.current = next;
           state.depth += 1;
           renderFunnel(next);
         } else {
-          // финал воронки — тупик на той же глубине, что и секрет
+          // Этот клик завершает путь и приводит к тупику на финальной глубине
           const de = { type: 'dead_end', title: 'Тупик', button: { emoji: '🏠', title: 'На главную', action: 'jump', target_path: 'root' } };
           state.stack.push(state.current);
           state.current = de;
